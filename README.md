@@ -1,25 +1,60 @@
 ##ASSIGNMENT##
+
 #Required feature:
-• Provide 2 http endpoints 
-    o <host>/v1/diff/<ID>/left
-    o <host>/v1/diff/<ID>/right
-        - that accept JSON containing base64 encoded binary data on both endpoints.
-• The provided data needs to be diff-ed and the results shall be available on a third endpoint (<host>/v1/diff/<ID>). The results shall provide the following info in JSON format:
-	o If equal return that
-	o If not of equal size just return that
+• Provide 2 http endpoints (that accept JSON containing base64 encoded binary data on both endpoints.
+)
+    o <host>/v1/diff/<ID>/left 	-> DONE
+    o <host>/v1/diff/<ID>/right	-> DONE
+	o third endpoint (<host>/v1/diff/<ID>)
+		
+• The provided data needs to be diff-ed and the results shall be available on a third endpoint.
+ The results shall provide the following info in JSON format:
+	o If "equal" return that
+	o If "not of equal size just" return that
 	o If of same size provide insight in where the diff are, actual diffs are not needed.
 		So mainly offsets + length in the data
+
 • Make assumptions in the implementation explicit, choices are good but need to be communicated
 
 #Required technology:
 
 • C#
 • functionality shall be under integration test
+	- Specflow (BDD)
+	- Selenium LoadTest
 • internal logic shall be under unit test
+	- Unit test
+		- Xunit
+			http://www.centare.com/asp-net-core-1-0-unit-testing/
+			https://wildermuth.com/2016/05/13/Getting-Ready-for-ASP-NET-Core-RC2
+			https://xunit.github.io/docs/getting-started-dotnet-core.html
+			/*
+			[FACT] - Facts are tests which are always true. They test invariant conditions.
+			[THEORY] - Theories are tests which are only true for a particular set of data.
+			*/
+
+	- Code Coverage Report
+		http://www.codeproject.com/Articles/1031859/Measuring-code-coverage-of-ASP-NET-applications-us
+		http://danielpalme.github.io/ReportGenerator/		
 • documentation in code
+	- 
 • short readme on usage
+	- Describe how to setup, use and test.
 
 
+Once the assignment is finished, please send it	directly to	Dragos, at dragos.manolache@4cinsights.com
+
+## APPLICATION ARCHITECTURE ##
+
+Controller
+	Layer responsible to recieve and ask business the result of.
+Busines
+	Layer resposible to process all methods to calculate the diferences between those strings (right and left)
+Model
+	Layer resposible to provide the model entity to store the data.
+
+
+TODO: DELETE ALL BELOW??	
 
 # Welcome to ASP.NET Core
 
