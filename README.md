@@ -1,13 +1,15 @@
 ##ASSIGNMENT##
 
 #Required feature:
-• Provide 2 http endpoints (that accept JSON containing base64 encoded binary data on both endpoints.
+• Provide 2 http endpoints 
+(that accept JSON containing base64 encoded binary data on both endpoints.
 )
     o <host>/v1/diff/<ID>/left 	-> DONE
     o <host>/v1/diff/<ID>/right	-> DONE
-	o third endpoint (<host>/v1/diff/<ID>)
+	o third endpoint (<host>/v1/diff/<ID>) -> DONE
 		
 • The provided data needs to be diff-ed and the results shall be available on a third endpoint.
+
  The results shall provide the following info in JSON format:
 	o If "equal" return that
 	o If "not of equal size just" return that
@@ -22,6 +24,7 @@
 • functionality shall be under integration test
 	- Specflow (BDD)
 	- Selenium LoadTest
+	
 • internal logic shall be under unit test
 	- Unit test
 		- Xunit
@@ -35,7 +38,8 @@
 
 	- Code Coverage Report
 		http://www.codeproject.com/Articles/1031859/Measuring-code-coverage-of-ASP-NET-applications-us
-		http://danielpalme.github.io/ReportGenerator/		
+		http://danielpalme.github.io/ReportGenerator/	
+
 • documentation in code
 	- 
 • short readme on usage

@@ -16,7 +16,8 @@
         "Microsoft.Extensions.Logging.Debug": "1.0.0",
         "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
         "xunit": "2.1.0-rc2-*",
-        "dotnet-test-xunit": "1.0.0-rc2-*"
+        "dotnet-test-xunit": "1.0.0-rc2-*",
+        "Microsoft.AspNetCore.TestHost": "1.0.0"
     },
     "testRunner": "xunit",
     "tools": {

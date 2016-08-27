@@ -1,4 +1,4 @@
-namespace _cInsights.Controllers.Input
+namespace _cInsights.Model
 {
     public class InputValue
     {

@@ -1,54 +1,79 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using _cInsights.Model;
-using _cInsights.Business;
-using _cInsights.Business.Distance;
-using _cInsights.Controllers.Input;
 using System;
-using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using _cInsights.Business;
+using _cInsights.Model;
+using _cInsights.Business.Enum;
 
 namespace _cInsights.Controllers
 {
     [Route("v1/[controller]")]
     public class DiffController : Controller
     {
-        // GET v1/diff
-        [HttpGet]
-        public IEnumerable<Diff> GetAllDiferences()
+
+        /// <summary>
+        /// Get the result of the comparison of the values "right" and "left" for the ID informed.
+        /// GET /v1/diff
+        /// </summary>
+        /// <param name="id">id to search</param>
+        /// <returns>JsonResult with the information</returns>
+        [HttpGet("/v1/healthcheck")]
+        public IActionResult GetHealthcheck(string id)
         {
-            return DiffBusiness.GetAllResults();
+            return new JsonResult("ALIVE");
         }
 
-        // GET v1/diff/{id}
+        /// <summary>
+        /// Get the result of the comparison of the values "right" and "left" for the ID informed.
+        /// GET v1/diff/{id}
+        /// </summary>
+        /// <param name="id">id to search</param>
+        /// <returns>JsonResult with the information</returns>
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var diff = DiffBusiness.FindAll(id);
-            var right = diff[0].right;
-            var rightBase64Decoded = Encoding.UTF8.GetString(Convert.FromBase64String(right));
-            var left = diff[0].left;
-            var leftBase64Decoded = Encoding.UTF8.GetString(Convert.FromBase64String(left));
-
-            var result = LCS.Result(rightBase64Decoded, leftBase64Decoded);
-            var simple = right.CompareTo(left);
-            
-            return new JsonResult(simple + "|" + result + " | " + right + " | " + rightBase64Decoded + " | " + left + " | " + leftBase64Decoded);
+            return new JsonResult(DiffBusiness.GetResult(id));
         }
-
-        // POST v1/diff/{id}/left
+        /// <summary>
+        /// Inserts the value in the left property to the ID informed
+        /// POST v1/diff/{id}/left
+        /// </summary>
+        /// <param name="input">JSON with the value</param>
+        /// <param name="id">id to references </param>
+        /// <returns>
+        /// JsonResult with the information. "OK" - if all the information was stored in memory
+        /// </returns>
         [HttpPost("{id}/left")]
         public IActionResult PostLeft([FromBody]InputValue input, string id)
         {
-            DiffBusiness.AddDiffToComparer(id, input.value, EnumDirection.Left);
-            return new JsonResult(id + " | " + input.ToString() + "|" + Diff.ListInstance.FindLast(x => x.id.Equals(id)).ToString());
-        }
+            if (input == null) throw new ArgumentNullException("input");
+            if (input.value.Trim() == String.Empty) throw new ArgumentException("Input.value cannot be empty", "input");
 
-        // POST v1/diff/{id}/right
+            if (id == null) throw new ArgumentNullException("id");
+            if (id.Trim() == String.Empty) throw new ArgumentException("id cannot be empty", "id");
+
+            DiffBusiness.AddToStorage(id, input.value, EnumDirection.Left);
+            return new JsonResult("OK");
+        }
+        /// <summary>
+        /// Inserts the value in the right property to the ID informed
+        /// POST v1/diff/{id}/right
+        /// </summary>
+        /// <param name="input">JSON with the value</param>
+        /// <param name="id">id to references </param>
+        /// <returns>
+        /// JsonResult with the information. "OK" - if all the information was stored in memory
+        /// </returns>
         [HttpPost("{id}/right")]
         public IActionResult PostRight([FromBody]InputValue input, string id)
         {
-            DiffBusiness.AddDiffToComparer(id, input.value, EnumDirection.Right);
-            return new JsonResult(id + " | " + input.ToString() + "|" + Diff.ListInstance.FindLast(x => x.id.Equals(id)).ToString());
+            if (input == null) throw new ArgumentNullException("input");
+            if (input.value.Trim() == String.Empty) throw new ArgumentException("Input.value cannot be empty", "input");
+
+            if (id == null) throw new ArgumentNullException("id");
+            if (id.Trim() == String.Empty) throw new ArgumentException("id cannot be empty", "id");
+
+            DiffBusiness.AddToStorage(id, input.value, EnumDirection.Right);
+            return new JsonResult("OK");
         }
     }
 }
