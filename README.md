@@ -1,12 +1,11 @@
 ##ASSIGNMENT##
 
 #Required feature:
-• Provide 2 http endpoints 
-(that accept JSON containing base64 encoded binary data on both endpoints.
+ - Provide 2 http endpoints (that accept JSON containing base64 encoded binary data on both endpoints.
 )
-    o <host>/v1/diff/<ID>/left 	-> DONE
-    o <host>/v1/diff/<ID>/right	-> DONE
-	o third endpoint (<host>/v1/diff/<ID>) -> DONE
+- <host>/v1/diff/<ID>/left 	-> DONE
+- <host>/v1/diff/<ID>/right	-> DONE
+- third endpoint (<host>/v1/diff/<ID>) -> DONE
 		
 • The provided data needs to be diff-ed and the results shall be available on a third endpoint.
 
