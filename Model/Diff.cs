@@ -6,6 +6,9 @@ namespace _cInsights.Model
 {
     public class Diff
     {
+        /// <summary>
+        /// Memory Storage
+        /// </summary>
         static List<Diff> storageDiff;
         public static List<Diff> StorageDiff
         {

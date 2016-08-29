@@ -10,51 +10,83 @@
 		
 - The provided data needs to be diff-ed and the results shall be available on a third endpoint.
 - The results shall provide the following info in JSON format:
-	- If "equal" return that
-	- If "not of equal size just" return that
+	- If "equal" return that -> DONE
+	- If "not of equal size just" return that -> DONE
 	- If of same size provide insight in where the diff are, actual diffs are not needed.
-		- So mainly offsets + length in the data
+		- So mainly offsets + length in the data -> DONE
 
 - Make assumptions in the implementation explicit, choices are good but need to be communicated
 
 ##Required technology:
 
-- C#
-- functionality shall be under integration test
-	- Specflow (BDD)
-	- Selenium LoadTest
-	
-- internal logic shall be under unit test
+- C# - DONE
+- functionality shall be under integration test -> DONE (Only the HealthCheck)
+- internal logic shall be under unit test -> DONE
 	- Unit test
 		- Xunit
-			http://www.centare.com/asp-net-core-1-0-unit-testing/
-			https://wildermuth.com/2016/05/13/Getting-Ready-for-ASP-NET-Core-RC2
-			https://xunit.github.io/docs/getting-started-dotnet-core.html
-			/*
-			[FACT] - Facts are tests which are always true. They test invariant conditions.
-			[THEORY] - Theories are tests which are only true for a particular set of data.
-			*/
-
-	- Code Coverage Report
-		http://www.codeproject.com/Articles/1031859/Measuring-code-coverage-of-ASP-NET-applications-us
-		http://danielpalme.github.io/ReportGenerator/	
-
-- documentation in code 
+			- http://www.centare.com/asp-net-core-1-0-unit-testing/
+			- https://wildermuth.com/2016/05/13/Getting-Ready-for-ASP-NET-Core-RC2
+			- https://xunit.github.io/docs/getting-started-dotnet-core.html
+			
+			- [FACT] - Facts are tests which are always true. They test invariant conditions.
+			- [THEORY] - Theories are tests which are only true for a particular set of data.
+			
+- documentation in code
+	- All methods has summary description to generate auto documentation.
 - short readme on usage
+	- Write the description.
 
-#APPLICATION ARCHITECTURE
+#APPLICATION 
+
+##RESUME
+	This application was built using the Asp.net Core with Visual Studio Code under MAC OS X environment.
+	Follow bellow some datas e instructions to procede with the usage.
+
+##ARCHITECTURE
 
 - Controller
-	- Layer responsible to recieve and ask business the result of.
+	- Layer responsible to receive and ask business the result of.
 - Busines
 	- Layer resposible to process all methods to calculate the diferences between those strings (right and left)
 - Model
 	- Layer resposible to provide the model entity to store the data and be an data transfer objects if needed.
+- Tests 
+	- In this folder  have unit tests developed to cover the features and the result expected.
+- TestsIntegration
+	- in this folder have the tests developed to cover the integrated test by inicializing the webserver and request the endpoints.
+- 
+#TESTING APPLICATION
+
+- (Mac OS X  - instructions)
+	- Git clone this address
+		- https://github.com/StinThiago/4cInsights.git
+	- Open the terminal
+	- Seek for the folder where the project was downloded from git
+	- Garantee that NPM was intalled and Asp.net Core either, bellow have the microsoft instructions
+	
+	- After those instructions proceed in the same folder this commands.
+		- dotnet restore
+		- dotnet build
+		- dotnet test
+		- dotnet run 
+
+## TESTING THE ENDPOINTS 
+
+- LEFT VALUE
+	- curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -H "Postman-Token: ffaa6c29-1f34-f03d-c3c0-3febb4b5785a" -d '{"value":"Zm9yIHN1cmUgWW91IFdJTEw="}' "http://localhost:5000/v1/diff/1/left"
+
+- RIGHT VALUE
+	- curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -H "Postman-Token: cdea9937-edef-1827-9e21-2601ac53f668" -d '{"value":"Zm9yIHN1cmUgWW91IFdJTEw="}' "http://localhost:5000/v1/diff/1/right"
+
+- GET VALUE (of specfic ID)
+	- curl -X GET -H "Cache-Control: no-cache" -H "Postman-Token: a01c355d-bdfe-5a01-813b-bb6e45fdbfef" "http://localhost:5000/v1/diff/1"
+
+
+
 
 ###############################------------###############################
 #Microsoft documentation
 ###############################------------###############################
-
 
 # Welcome to ASP.NET Core
 

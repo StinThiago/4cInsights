@@ -18,5 +18,10 @@ namespace _cInsights.Model
         /// lengh of the word.
         /// </summary>
         public int length { get; set; }
+
+        /// <summary>
+        /// value of comparison
+        /// </summary>
+        public string value { get; set; }
     }
 }

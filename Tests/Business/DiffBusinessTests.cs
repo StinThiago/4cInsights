@@ -1,12 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
 using _cInsights.Business;
 using _cInsights.Business.Enum;
+using _cInsights.Model;
 using Xunit;
 
 namespace _cInsights.Tests
 {
     public class DiffBusinessTests
     {
-        #region AddToStorage
+        Diff getDefaultDiff()
+        {
+            return new Diff() { id = "id", left = "left", right = "right" };
+        }
 
         [Fact]
         public void PassingLeftDirectionTest()
@@ -54,10 +61,97 @@ namespace _cInsights.Tests
             var right = DiffBusiness.First("id").right;
             Assert.Equal("", right);
         }
-        
-        #endregion
+
+        [Fact]
+        public void PassingDecodeBase64StringTest()
+        {
+            var stringToDecode = "Zm9yIHN1cmUgWW91IFdJTEw=";
+            var result = Encoding.UTF8.GetString(Convert.FromBase64String(stringToDecode));
+            var decodedResult = "for sure You WILL";
+            Assert.Equal(decodedResult, result);
+        }
+
+        [Fact]
+        public void PassingDecodeBase64String2Test()
+        {
+            var stringToDecode = "eWVzIGknbGwgcmVhY2ggdGhlIEdvYWw=";
+            var result = Encoding.UTF8.GetString(Convert.FromBase64String(stringToDecode));
+            var decodedResult = "yes i'll reach the Goal";
+            Assert.Equal(decodedResult, result);
+        }
+
+        [Fact]
+        public void PassingIsTheSameLengthTest()
+        {
+            Diff diff = getDefaultDiff();
+            DiffBusiness.AddToStorage(diff.id, diff.right, EnumDirection.Right);
+            DiffBusiness.AddToStorage(diff.id, diff.right, EnumDirection.Left);
+            var result = DiffBusiness.First("id").right.Length.Equals(DiffBusiness.First("id").left.Length);
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void PassingNotIsTheSameLengthTest()
+        {
+            Diff diff = getDefaultDiff();
+            DiffBusiness.AddToStorage(diff.id, diff.right, EnumDirection.Right);
+            DiffBusiness.AddToStorage(diff.id, diff.left, EnumDirection.Left);
+            var result = DiffBusiness.First("id").right.Length.Equals(DiffBusiness.First("id").left.Length);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void PassingGetResultNotEqualDiferenceTest()
+        {
+            Diff diff = getDefaultDiff();
+            DiffBusiness.AddToStorage(diff.id, diff.right, EnumDirection.Right);
+            DiffBusiness.AddToStorage(diff.id, diff.left, EnumDirection.Left);
+            var result = DiffBusiness.GetResult("id");
+
+            Assert.Equal(result.diference, EnumDiff.NotEqual.ToString());
+        }
+
+        [Fact]
+        public void PassingGetResultSameSizeDiferenceTest()
+        {
+            Diff diff = getDefaultDiff();
+            DiffBusiness.AddToStorage(diff.id, diff.right, EnumDirection.Right);
+            DiffBusiness.AddToStorage(diff.id, "left1", EnumDirection.Left);
+            var result = DiffBusiness.GetResult("id");
+
+            Assert.Equal(result.diference, EnumDiff.SameSize.ToString());
+        }
 
 
-        
+        [Fact]
+        public void PassingGetResultSameSizeOffSetTest()
+        {
+            Diff diff = getDefaultDiff();
+            DiffBusiness.AddToStorage(diff.id, diff.right, EnumDirection.Right);
+            DiffBusiness.AddToStorage(diff.id, diff.left, EnumDirection.Left);
+            var result = DiffBusiness.GetResult("id");
+
+            Assert.Equal(result.offsets, 4);
+        }
+        [Fact]
+        public void PassingGetResultSameSizeLengthTest()
+        {
+            Diff diff = getDefaultDiff();
+            DiffBusiness.AddToStorage(diff.id, diff.right, EnumDirection.Right);
+            DiffBusiness.AddToStorage(diff.id, diff.left, EnumDirection.Left);
+            var result = DiffBusiness.GetResult("id");
+
+            Assert.Equal(result.length, 5);
+        }
+
+        [Fact]
+        public void PassingGetResultSameSizeTest()
+        {
+            DiffBusiness.AddToStorage("id", "Zm9yIHN1cmUgWW91IFdJTEw=", EnumDirection.Right);
+            DiffBusiness.AddToStorage("id", "Zm9yIHN1cmUgWW91IFdJTEw=", EnumDirection.Left);
+            var result = DiffBusiness.GetResult("id");
+
+            Assert.Equal(result.diference, EnumDiff.Equal.ToString());
+        }
     }
 }
