@@ -1,30 +1,30 @@
-##ASSIGNMENT##
+#ASSIGNMENT
 
-#Required feature:
- - Provide 2 http endpoints (that accept JSON containing base64 encoded binary data on both endpoints.
+##Required feature:
+
+- Provide 2 http endpoints (that accept JSON containing base64 encoded binary data on both endpoints.
 )
-- <host>/v1/diff/<ID>/left 	-> DONE
-- <host>/v1/diff/<ID>/right	-> DONE
-- third endpoint (<host>/v1/diff/<ID>) -> DONE
+	- <host>/v1/diff/<ID>/left 	-> DONE
+	- <host>/v1/diff/<ID>/right	-> DONE
+	- third endpoint (<host>/v1/diff/<ID>) -> DONE
 		
-• The provided data needs to be diff-ed and the results shall be available on a third endpoint.
+- The provided data needs to be diff-ed and the results shall be available on a third endpoint.
+- The results shall provide the following info in JSON format:
+	- If "equal" return that
+	- If "not of equal size just" return that
+	- If of same size provide insight in where the diff are, actual diffs are not needed.
+		- So mainly offsets + length in the data
 
- The results shall provide the following info in JSON format:
-	o If "equal" return that
-	o If "not of equal size just" return that
-	o If of same size provide insight in where the diff are, actual diffs are not needed.
-		So mainly offsets + length in the data
+- Make assumptions in the implementation explicit, choices are good but need to be communicated
 
-• Make assumptions in the implementation explicit, choices are good but need to be communicated
+##Required technology:
 
-#Required technology:
-
-• C#
-• functionality shall be under integration test
+- C#
+- functionality shall be under integration test
 	- Specflow (BDD)
 	- Selenium LoadTest
 	
-• internal logic shall be under unit test
+- internal logic shall be under unit test
 	- Unit test
 		- Xunit
 			http://www.centare.com/asp-net-core-1-0-unit-testing/
@@ -39,25 +39,22 @@
 		http://www.codeproject.com/Articles/1031859/Measuring-code-coverage-of-ASP-NET-applications-us
 		http://danielpalme.github.io/ReportGenerator/	
 
-• documentation in code
-	- 
-• short readme on usage
-	- Describe how to setup, use and test.
+- documentation in code 
+- short readme on usage
 
+#APPLICATION ARCHITECTURE
 
-Once the assignment is finished, please send it	directly to	Dragos, at dragos.manolache@4cinsights.com
+- Controller
+	- Layer responsible to recieve and ask business the result of.
+- Busines
+	- Layer resposible to process all methods to calculate the diferences between those strings (right and left)
+- Model
+	- Layer resposible to provide the model entity to store the data and be an data transfer objects if needed.
 
-## APPLICATION ARCHITECTURE ##
+###############################------------###############################
+#Microsoft documentation
+###############################------------###############################
 
-Controller
-	Layer responsible to recieve and ask business the result of.
-Busines
-	Layer resposible to process all methods to calculate the diferences between those strings (right and left)
-Model
-	Layer resposible to provide the model entity to store the data.
-
-
-TODO: DELETE ALL BELOW??	
 
 # Welcome to ASP.NET Core
 
